@@ -89,12 +89,14 @@ body{background:var(--bg);display:flex;align-items:center;justify-content:center
 .cal .wk{color:#111;font-size:7.4cqw;font-weight:600}.cal .dn{font-size:25cqw;font-weight:300;line-height:1.05}.cal .ev{font-size:8.2cqw;color:#9a9a9f;margin-top:auto}
 .nt .hh{color:#e8a800;font-size:7.6cqw;font-weight:700;margin-bottom:1.5cqw}.nt .tt{font-size:7.6cqw;font-weight:700;margin-bottom:1cqw}
 .nt .ln{font-size:7cqw;line-height:1.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ds{text-align:center;font-size:11px;color:var(--sub);margin:8px 0 2px}
+.ds{text-align:center;font-size:11px;color:var(--sub);margin:10px 0 4px}
 #notif{position:absolute;top:38px;left:10px;right:10px;z-index:40;background:rgba(245,245,247,.94);color:#111;border-radius:20px;padding:10px 12px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25);transform:translateY(-170px);opacity:0;pointer-events:none;transition:transform .35s,opacity .35s;cursor:pointer;font-size:12px}
 #notif.on{transform:none;opacity:1;pointer-events:auto}#notif .ic{width:30px;height:30px;border-radius:8px;background:linear-gradient(#6fe583,#1fb83d);flex:none;display:flex;align-items:center;justify-content:center;font-size:16px}
 #notif b{display:block;font-size:13px}#notif .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#333}#notif small{margin-left:auto;color:#8a8a90;font-size:11px;align-self:flex-start;flex:none}
 #status{background:transparent;transition:color .2s}#status.hide{display:none}#status.dk{color:#111}.rt{display:inline-flex;align-items:center;gap:6px}
 #status.dk~#homebar{background:#111}
+.pb{display:flex;gap:10px;padding:4px 18px 10px}.pb button{flex:1;border:0;border-radius:10px;background:#f2f2f7;color:#fa2d48;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
+.mrow>div{min-width:0}.mrow small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ttl{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mini .ttl{flex:1}
 </style></head><body>
 <div id="phone"><div id="screen">
 <div id="status" class="hide"><span id="clock">--:--</span><span class="rt"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx=".8" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx=".8" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx=".8" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M1 4a10 10 0 0114 0M3.5 6.6a6.5 6.5 0 019 0M6 9a3 3 0 014 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="bat"><span id="pct">23</span>%<i><b></b></i></span></span></div>
@@ -117,9 +119,9 @@ const D={
  locale:"ko-KR", tz:"Asia/Tokyo", pass:"0315", battery:23,
  notify:{from:"미도 토라오",texts:["내가 애매한 걸 싫어해서","무슨 말 하고 싶은 건지 알지?","이따 봐"],now:"지금"},
  widget:{city:"도쿄",temp:"17°",cond:"구름 조금",hl:"최고:20° 최저:13°",hours:[["지금","⛅","17°"],["15시","☀️","19°"],["18시","⛅","16°"],["21시","🌙","14°"],["24시","🌙","13°"]]},
- ui:{lbWx:"날씨",lbNt:"메모",lbCal:"캘린더",calnone:"오늘 이벤트 없음",today:"오늘",hint:"비밀번호를 입력하세요",wrong:"비밀번호가 틀렸습니다",home:"홈",
+ ui:{am:"오전",pm:"오후",md:(m,d)=>`${m}월 ${d}일`,lbWx:"날씨",lbNt:"메모",lbCal:"캘린더",calnone:"오늘 이벤트 없음",today:"오늘",hint:"비밀번호를 입력하세요",wrong:"비밀번호가 틀렸습니다",home:"홈",
   apps:[["call","전화","📞"],["msg","메시지","💬"],["search","Safari","🧭"],["note","메모","📝"],["music","음악","🎵"],["pdf","PDF","📄"],["line","LINE","L",999]],
-  recent:"최근 통화",msgs:"메시지",fav:"즐겨찾기",sfph:"검색 또는 웹사이트 이름 입력",cancel:"취소",recentS:"최근 검색",note:"메모",lib:"라이브러리",docs:"문서",recentItem:"최근 연 항목",
+  recent:"최근 통화",msgs:"메시지",fav:"즐겨찾기",sfph:"검색 또는 웹사이트 이름 입력",cancel:"취소",recentS:"최근 검색",note:"메모",lib:"라이브러리",playlists:"플레이리스트",songs:"곡",play:"재생",shuffle:"셔플",docs:"문서",recentItem:"최근 연 항목",
   tabs:["지금 듣기","둘러보기","라이브러리","검색"],favs:[["📰","뉴스"],["🗺️","지도"],["☁️","날씨"],["▶️","동영상"]]},
  calls:[["+81 90-5521-8847","부재중 (7)","어제 23:58",1],["매니저님","부재중","어제 21:40",1],["알 수 없는 번호","부재중 (3)","어제 03:12",1],["호시카게 사장님","수신 · 3분","어제 19:20",0],["어머니","발신 · 4분","어제 18:05",0],["사쿠라이 감독님","부재중","10/24 22:10",1],["유키(Re:vale)","발신 · 2분","10/24 15:30",0],["미도 토라오","수신 · 6분","10/23 23:02",0],["프로듀서 카노","부재중","10/23 11:12",1],["어머니","부재중","10/21 20:30",1]],
  /* [텍스트, 1=내가 보낸 것] */
@@ -142,10 +144,26 @@ const D={
   ["매니저님",[["다음 주 연습은 10시 입실입니다.",0,"어제 20:00"],["알겠습니다.",1,"어제 20:03"]],0],
   ["유키(Re:vale)",[["유키 씨, 나츠메입니다. 이번 촬영도 잘 부탁드려요.",1,"10/24 15:42"],["잘 부탁해, 나츠메 군.",0,"10/24 15:44"],["어제 현장에서 많이 배웠습니다. 감사합니다.",1,"어제 09:12"],["다음 주 대본 리딩도 잘 부탁드립니다.",1,"어제 09:14"]],0],
   ["사쿠라이 감독님",[["나츠메 군, 이번 드라마 어떻게 나와줄 수 없겠어?",0,"10/24 22:12"],["대본은 나츠메 군에게 맞춰서 고칠 수 있어. 한번 얘기 좀 하자.",0,"10/24 22:13"]],0],
-  ["프로듀서 카노",[["나츠메 군, 이번 기획 한 번만 다시 생각해 줄 수 없을까? 연락 기다릴게요.",0,"10/23 11:20"]],0]],
+  ["프로듀서 카노",[["다시 생각해 줄 수 없을까요? 연락 기다릴게요.",0,"10/23 11:20"]],0]],
  search:["분위기 좋은 바 도쿄","도쿄 바 혼자 가기 좋은 곳","시부야 맛집 개인실","긴자 스시 맛집 예약","도쿄 심야 라멘 맛집","혼밥 하기 좋은 맛집 도쿄","도쿄 클래식 공연 일정","피아노 리사이틀 도쿄 올해","취미 추천","혼자 하는 취미 추천","30대 후반 여성 선물 추천","어머니 선물 추천 30대 후반 여성"],
  notes:[["연습 메모","・어미를 떨어뜨리지 않기\n・간을 반 박자 더 기다리기\n・시선은 상대의 조금 안쪽\n・물 마시기"],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
- music:[["달빛","드뷔시"],["녹턴 2번 내림마장조","쇼팽"],["라 캄파넬라","리스트"],["혁명 에튀드","쇼팽"],["피아노 협주곡 2번","라흐마니노프"],["프렐류드 다장조","바흐"],["월광 소나타 1악장","베토벤"],["사랑의 꿈 3번","리스트"],["꽃다발","back number"]],
+ playlists:[
+  {name:"I",tracks:[
+   ["Suite bergamasque, L. 75: III. Clair de lune","Claude Debussy"],
+   ["Nocturne No. 2 in E-Flat Major, Op. 9 No. 2","Frédéric Chopin"],
+   ["Grandes études de Paganini, S. 141: No. 3 in G-Sharp Minor “La campanella”","Franz Liszt"],
+   ["12 Études, Op. 10: No. 12 in C Minor “Revolutionary”","Frédéric Chopin"],
+   ["Piano Concerto No. 2 in C Minor, Op. 18: I. Moderato","Sergei Rachmaninoff"],
+   ["The Well-Tempered Clavier, Book I: Prelude No. 1 in C Major, BWV 846","Johann Sebastian Bach"],
+   ["Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 “Moonlight”: I. Adagio sostenuto","Ludwig van Beethoven"],
+   ["Liebesträume, S. 541: No. 3 in A-Flat Major","Franz Liszt"]]},
+  {name:"II",tracks:[
+   ["花束","back number"],
+   ["Pretender","Official髭男dism"],
+   ["白日","King Gnu"],
+   ["366日","HY"],
+   ["恋","星野源"],
+   ["夜に駆ける","YOASOBI"]]}],
  /* [파일명, 제목, 주인공 역할명(형광펜), 본문] */
  script:[
   ["역_승강장에서_2장.pdf","제1막 제2장","하루카","(밤. 역 승강장.\n 아무도 없다.)\n\n하루카  “……안 올 거라고 생각했어.”\n\n(사이)\n\n하루카  “아니, 아니야.\n         오지 않았으면 했던 걸지도.”"],
@@ -215,32 +233,39 @@ function open(k){
  if(k==="search")safari();
  if(k==="note"){page(U.note,D.notes.map((x,i)=>`<div class="row" style="cursor:pointer" data-i="${i}"><div>${x[0]}<br><small>${x[1].split("\n")[0]}</small></div></div>`).join(""));
   bind("[data-i]",i=>page(D.notes[i][0],`<div class="note"><p>${D.notes[i][1]}</p></div>`,["note",U.note]))}
- if(k==="music")lib(0);
+ if(k==="music")plist();
  if(k==="pdf"){page(U.docs,D.script.map((s,i)=>`<div class="row" style="cursor:pointer" data-i="${i}"><div><span class="pdf">PDF</span>${s[0]}<br><small>${U.recentItem}</small></div></div>`).join(""));
   bind("[data-i]",i=>{const s=D.script[i];page(s[0],`<div class="pdfp"><b>${s[1]}</b>${s[3].replace(new RegExp("^"+s[2]+"  “[^”]*”","gm"),m=>`<span class="hl">${m}</span>`)}</div>`,["pdf",U.docs])})}}
 const hm=()=>new Date().toLocaleTimeString(D.locale,{timeZone:D.tz,hour:"2-digit",minute:"2-digit",hour12:false});
-const bub=t=>(t[3]?`<div class="ds">${t[3]}</div>`:"")+`<div class="bw ${t[1]?"me":""}"><div class="b ${t[1]?"me":""}">${t[0]}</div><small>${t[2]}</small></div>`;
-function thread(i){$("#notif").classList.remove("on");const m=D.msgs[i],had=m[2];m[2]=0;page(m[0],`<div class="chat">${m[1].map(bub).join("")}</div>`,["msg",U.msgs]);cur=i;
+const tfmt=s=>{const [d,tm]=s.split(" "),[h,m]=tm.split(":").map(Number),mt=d.match(/^(\d+)\/(\d+)$/);return (mt?U.md(mt[1],mt[2]):d)+" "+(h<12?U.am:U.pm)+" "+(h%12||12)+":"+String(m).padStart(2,"0")};
+const mins=s=>{const [h,m]=s.split(" ")[1].split(":").map(Number);return h*60+m};
+const need=(t,p)=>!p||p[2].split(" ")[0]!==t[2].split(" ")[0]||Math.abs(mins(t[2])-mins(p[2]))>=60;
+const bub=(t,p)=>(need(t,p)?`<div class="ds">${tfmt(t[2])}</div>`:"")+`<div class="bw ${t[1]?"me":""}"><div class="b ${t[1]?"me":""}">${t[0]}</div></div>`;
+function thread(i){$("#notif").classList.remove("on");const m=D.msgs[i],had=m[2];m[2]=0;page(m[0],`<div class="chat">${m[1].map((t,j)=>bub(t,m[1][j-1])).join("")}</div>`,["msg",U.msgs]);cur=i;
  const bd=A.querySelector(".body");bd.scrollTop=bd.scrollHeight;
- if(m[4]&&m[4].length)bd.onclick=()=>{if(!m[4].length)return;const t=m[4].shift();m[1].push(t);bd.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t));bd.scrollTop=bd.scrollHeight};
+ if(m[4]&&m[4].length)bd.onclick=()=>{if(!m[4].length)return;const t=m[4].shift();m[1].push(t);bd.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));bd.scrollTop=bd.scrollHeight};
  if(had&&m[3]){const q=m[3];m[3]=null;q.forEach((t,k)=>setTimeout(()=>{m[1].push([t[0],0,U.today+" "+hm()]);
   if(cur===i&&$("#app").classList.contains("on"))thread(i);else m[2]=1},2200*(k+1)))}}
 function maybeNotify(){const i=D.msgs.findIndex(m=>m[0]===D.notify.from),m=D.msgs[i];
  if(!m||!m[4]||m[4].length||m.fired)return;m.fired=1;const n=$("#notif");let tm;
  n.onclick=()=>{n.classList.remove("on");thread(i)};
  D.notify.texts.forEach((tx,k)=>setTimeout(()=>{const t=[tx,0,U.today+" "+hm()];m[1].push(t);
-  if(cur===i&&$("#app").classList.contains("on")){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}
+  if(cur===i&&$("#app").classList.contains("on")){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}
   else{m[2]=1;badge();n.innerHTML=`<div class="ic">💬</div><div style="min-width:0"><b>${m[0]}</b><div class="tx">${tx}</div></div><small>${D.notify.now}</small>`;
    n.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>n.classList.remove("on"),5000)}},1200+k*2800))}
 function safari(){page(U.fav,`<div class="fav">${U.favs.map(f=>`<div><span>${f[0]}</span>${f[1]}</div>`).join("")}</div>`,null,`<div class="sbar" id="sb">🔍 ${U.sfph}</div>`);
  $("#sb").onclick=()=>{A.innerHTML=`<div class="sh"><div class="sin">🔍 ${U.sfph}</div><button id="cn">${U.cancel}</button></div><div class="body"><div class="sec">${U.recentS}</div>${D.search.map(x=>`<div class="row">🔍&nbsp;${x}<small>↖</small></div>`).join("")}</div>`;$("#cn").onclick=safari}}
+let PL=0;const TR=()=>D.playlists[PL].tracks;
 const g=i=>`linear-gradient(135deg,hsl(${i*47+10} 65% 62%),hsl(${i*47+50} 55% 38%))`;
-function lib(i){const m=D.music[i];page(U.lib,D.music.map((x,j)=>`<div class="mrow" data-i="${j}"><div class="art" style="background:${g(j)}"></div><div>${x[0]}<small>${x[1]}</small></div></div>`).join(""),null,
- `<div class="mini" id="mn"><div class="art" style="background:${g(i)}"></div><div>${m[0]}</div><span>⏸ ⏭</span></div><div class="tabs">${U.tabs.map((t,j)=>`<span class="${j==2?"on2":""}">${t}</span>`).join("")}</div>`);
- bind("[data-i]",player);$("#mn").onclick=()=>player(i)}
-function player(i){$("#status").classList.remove("dk");const m=D.music[i],n=D.music.length,h=i*47+10;let on=true;
- A.innerHTML=`<div class="pl" style="background:linear-gradient(180deg,hsl(${h} 45% 38%),hsl(${h} 50% 14%))"><button id="cl" style="text-align:left;font-size:22px">⌄</button><div class="big" style="background:${g(i)}"></div>
- <div style="font-size:19px;font-weight:700">${m[0]}</div><div style="opacity:.7;font-size:16px">${m[1]}</div><div class="bar"><i></i></div><div class="tm"><span>1:12</span><span>-3:21</span></div>
+const tabsH=()=>`<div class="tabs">${U.tabs.map((t,j)=>`<span class="${j==2?"on2":""}">${t}</span>`).join("")}</div>`;
+function plist(){page(U.lib,`<div class="sec" style="padding-bottom:4px">${U.playlists}</div>`+D.playlists.map((p,j)=>`<div class="mrow" data-i="${j}"><div class="art" style="background:${g(j*5+1)};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;font-family:serif">${p.name}</div><div style="min-width:0"><span class="ttl">${p.name}</span><small>${p.tracks.length} ${U.songs}</small></div><span style="margin-left:auto;color:#c7c7cc">›</span></div>`).join(""),null,tabsH());
+ bind("[data-i]",j=>{PL=j;lib(-1)})}
+function lib(i){const t=TR(),m=t[i],mini=i>=0?`<div class="mini" id="mn"><div class="art" style="background:${g(PL*5+i)}"></div><div class="ttl">${m[0]}</div><span>⏸ ⏭</span></div>`:"";
+ page(D.playlists[PL].name,`<div class="pb"><button id="pa">▶ ${U.play}</button><button id="sf">🔀 ${U.shuffle}</button></div>`+t.map((x,j)=>`<div class="mrow" data-i="${j}"><div class="art" style="background:${g(PL*5+j)}"></div><div style="min-width:0"><span class="ttl">${x[0]}</span><small>${x[1]}</small></div></div>`).join(""),["music",U.lib],mini+tabsH());
+ bind("[data-i]",player);$("#pa").onclick=()=>player(0);$("#sf").onclick=()=>player(Math.floor(Math.random()*t.length));if(i>=0)$("#mn").onclick=()=>player(i)}
+function player(i){$("#status").classList.remove("dk");const t=TR(),m=t[i],n=t.length,k=PL*5+i,h=k*47+10;let on=true;
+ A.innerHTML=`<div class="pl" style="background:linear-gradient(180deg,hsl(${h} 45% 38%),hsl(${h} 50% 14%))"><button id="cl" style="text-align:left;font-size:22px">⌄</button><div class="big" style="background:${g(k)}"></div>
+ <div style="font-size:17px;font-weight:700;line-height:1.3">${m[0]}</div><div style="opacity:.7;font-size:15px;margin-top:2px">${m[1]}</div><div class="bar"><i></i></div><div class="tm"><span>1:12</span><span>-3:21</span></div>
  <div class="ctl" style="margin-top:22px;font-size:30px"><button id="pv">⏮</button><button id="pp" style="font-size:38px">⏸</button><button id="nx">⏭</button></div></div>`;
  $("#cl").onclick=()=>lib(i);$("#pv").onclick=()=>player((i+n-1)%n);$("#nx").onclick=()=>player((i+1)%n);
  $("#pp").onclick=()=>{on=!on;$("#pp").textContent=on?"⏸":"▶"}}
