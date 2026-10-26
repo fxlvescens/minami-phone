@@ -151,7 +151,7 @@ const D={
   apps:[["call","전화","📞"],["msg","메시지","💬"],["search","Safari","🧭"],["note","메모","📝"],["music","음악","🎵"],["pdf","PDF","📄"],["line","LINE","L",999]],
   recent:"최근 통화",msgs:"메시지",fav:"즐겨찾기",sfph:"검색 또는 웹사이트 이름 입력",cancel:"취소",recentS:"최근 검색",note:"메모",lib:"라이브러리",playlists:"플레이리스트",songs:"곡",play:"재생",shuffle:"셔플",docs:"문서",recentItem:"최근 연 항목",
   tabs:["지금 듣기","둘러보기","라이브러리","검색"],favs:[["📰","뉴스"],["🗺️","지도"],["☁️","날씨"],["▶️","동영상"]]},
- calls:[["+81 90-5521-8847","부재중 (7)","어제 23:58",1],["매니저님","부재중","어제 21:40",1],["알 수 없는 번호","부재중 (3)","어제 03:12",1],["호시카게 사장님","수신 · 3분","어제 19:20",0],["어머니","발신 · 4분","어제 18:05",0],["사쿠라이 감독님","부재중","10/24 22:10",1],["유키(Re:vale)","발신 · 2분","10/24 15:30",0],["미도 토라오","수신 · 6분","10/23 23:02",0],["프로듀서 카노","부재중","10/23 11:12",1],["어머니","부재중","10/21 20:30",1]],
+ calls:[["+81 90-5521-8847","부재중 (7)","어제 23:58",1],["매니저님","부재중","어제 21:40",1],["알 수 없는 번호","부재중 (3)","어제 03:12",1],["호시카게 대표님","수신 · 3분","어제 19:20",0],["어머니","발신 · 4분","어제 18:05",0],["사쿠라이 감독님","부재중","10/24 22:10",1],["유키(Re:vale)","발신 · 2분","10/24 15:30",0],["미도 토라오","수신 · 6분","10/23 23:02",0],["프로듀서 카노","부재중","10/23 11:12",1],["어머니","부재중","10/21 20:30",1]],
  /* [텍스트, 1=내가 보낸 것] */
  msgs:[
   /* [이름, [[텍스트,1=내가 보냄,시간]...], 안읽음 1/0, 읽으면 뒤따라 오는 문자] */
@@ -167,7 +167,7 @@ const D={
   ["사쿠라이 감독님",[["나츠메 군, 이번 드라마 어떻게 나와줄 수 없겠어?",0,"10/24 22:12"],["대본은 나츠메 군에게 맞춰서 고칠 수 있어. 한번 얘기 좀 하자.",0,"10/24 22:13"]],0],
   ["프로듀서 카노",[["다시 생각해 줄 수 없을까요? 연락 기다릴게요.",0,"10/23 11:20"]],0]],
  search:["분위기 좋은 바 도쿄","도쿄 바 혼자 가기 좋은 곳","시부야 맛집 개인실","긴자 스시 맛집 예약","도쿄 심야 라멘 맛집","혼밥 하기 좋은 맛집 도쿄","도쿄 클래식 공연 일정","피아노 리사이틀 도쿄 올해","취미 추천","혼자 하는 취미 추천","30대 후반 여성 선물 추천","어머니 선물 추천 30대 후반 여성"],
- notes:[["연습 메모","・생각하는 표정 오래 X\n・미간 찌푸리는 버릇\n・의미 없는 웃음 X\n・숨 크게 들이마시기 X\n・화낼 때 턱에 힘 X\n・울음 참을 때 깜빡임\n・일상 대사 의미심장 X\n・잘하려 말고 그냥 듣기","・생각하는 표정 오래 X\n・미간 찌푸리는 버릇\n・의미 없는 웃음 X"],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
+ notes:[["연습 메모","・생각하는 표정 오래 X\n・미간 찌푸리는 버릇\n・의미 없는 웃음 X\n・숨 크게 들이마시기 X\n・화낼 때 턱에 힘 X\n・울음 참을 때 깜빡임\n・일상 대사 의미심장 X\n・잘하려 말고 그냥 듣기"],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
  playlists:[
   {name:"I",tracks:[
    ["Suite bergamasque, L. 75: III. Clair de lune","Claude Debussy"],
@@ -221,7 +221,7 @@ function press(k){if(k==="<")code=code.slice(0,-1);else if(code.length<4)code+=k
  if(code.length===4){if(code===D.pass){show("home");code="";dots();$("#hint").textContent=U.hint}
   else{$("#dots").classList.add("shake");$("#hint").textContent=U.wrong;
    setTimeout(()=>{$("#dots").classList.remove("shake");code="";dots()},400)}}}
-function show(id){$("#status").classList.toggle("hide",id==="lock");if(id!=="app")$("#status").classList.remove("dk");if(id==="home"){if(typeof badge==="function")badge();maybeNotify()}["lock","home","app"].forEach(v=>$("#"+v).classList.toggle("on",v===id))}
+function show(id){if(id!=="app"&&cur!==null){const p=cur;cur=null;setTimeout(()=>leave(p),0)}$("#status").classList.toggle("hide",id==="lock");if(id!=="app")$("#status").classList.remove("dk");if(id==="home"){if(typeof badge==="function")badge();maybeNotify()}["lock","home","app"].forEach(v=>$("#"+v).classList.toggle("on",v===id))}
 $("#homebar").onclick=()=>{if($("#home").classList.contains("on"))show("lock");else if(!$("#lock").classList.contains("on"))show("home")};
 const P=(c,d)=>`<svg viewBox="0 0 24 24" width="30" height="30">${d}</svg>`;
 const IC={
@@ -241,18 +241,18 @@ function badge(){const n=D.msgs.filter(m=>m[2]).length,e=$("#msgb");e.textConten
 const W=D.widget;
 $("#l1").textContent=U.lbWx;$("#l2").textContent=U.lbNt;$("#l3").textContent=U.lbCal;
 $("#wx").innerHTML=`<div class="in"><div class="city">${W.city} ➤</div><div class="big2">${W.temp}</div><div class="bt"><svg viewBox="0 0 24 24"><path fill="#fff" d="M7 18a4 4 0 01-.5-8 5.5 5.5 0 0110.6 1.3A3.4 3.4 0 0117 18z"/></svg><b>${W.cond}</b><br><span>${W.hl}</span></div></div>`;
-$("#nw").innerHTML=`<div class="in"><div class="hh">${U.note}</div><div class="tt">${D.notes[0][0]}</div>${(D.notes[0][2]||D.notes[0][1]).split("\n").map(l=>`<div class="ln">${l}</div>`).join("")}</div>`;
+$("#nw").innerHTML=`<div class="in"><div class="hh">${U.note}</div><div class="tt">${D.notes[0][0]}</div>${D.notes[0][1].split("\n").slice(0,3).map(l=>`<div class="ln">${l}</div>`).join("")}</div>`;
 $("#nw").onclick=()=>open("note");
 function cal(){const o={timeZone:D.tz},d=new Date();
  $("#cal").innerHTML=`<div class="in"><div class="wk">${d.toLocaleDateString(D.locale,{...o,weekday:"long"})}</div><div class="dn">${d.toLocaleDateString(D.locale,{...o,day:"numeric"}).replace(/\D/g,"")}</div><div class="ev">${U.calnone}</div></div>`}
 cal();setInterval(cal,60000);
-let cur=null;function page(title,html,back,foot){cur=null;$("#status").classList.add("dk");A.innerHTML=`<button class="back" id="bk">‹ ${back?back[1]:U.home}</button><div class="hd">${title}</div><div class="body">${html}</div>${foot||""}`;
+let cur=null,listOn=false;function page(title,html,back,foot){listOn=false;const p0=cur;cur=null;if(p0!==null&&html.indexOf('class="chat"')<0)setTimeout(()=>leave(p0),0);$("#status").classList.add("dk");A.innerHTML=`<button class="back" id="bk">‹ ${back?back[1]:U.home}</button><div class="hd">${title}</div><div class="body">${html}</div>${foot||""}`;
  $("#bk").onclick=back?()=>open(back[0]):()=>show("home");show("app")}
 function bind(sel,fn){A.querySelectorAll(sel).forEach(e=>e.onclick=()=>fn(+e.dataset.i))}
 function open(k){
  if(k==="call"&&ST.callsDone)chk("call");
  if(k==="call")page(U.recent,D.calls.map(c=>`<div class="row"><div><div class="${c[3]?"red":""}">${c[0]}</div><small>${c[1]}</small></div><small>${c[2]}</small></div>`).join(""));
- if(k==="msg"){page(U.msgs,D.msgs.map((m,i)=>{if(!m[1].length)return "";const l=m[1][m[1].length-1];return `<div class="row" style="cursor:pointer" data-i="${i}"><div><div>${m[0]}</div><small>${pv(l[0])}</small></div><small>${l[2]} ${m[2]?'<span style="color:#3478f6">●</span>':''}</small></div>`}).join(""));bind("[data-i]",thread)}
+ if(k==="msg"){page(U.msgs,D.msgs.map((m,i)=>{if(!m[1].length)return "";const l=m[1][m[1].length-1];return `<div class="row" style="cursor:pointer" data-i="${i}"><div><div>${m[0]}</div><small>${pv(l[0])}</small></div><small>${l[2]} ${m[2]?'<span style="color:#3478f6">●</span>':''}</small></div>`}).join(""));bind("[data-i]",thread);listOn=true}
  if(k==="search")safari();
  if(k==="note"){page(U.note,D.notes.map((x,i)=>`<div class="row" style="cursor:pointer" data-i="${i}"><div>${x[0]}<br><small>${x[1].split("\n")[0]}</small></div></div>`).join(""));
   bind("[data-i]",i=>page(D.notes[i][0],`<div class="note"><p>${D.notes[i][1]}</p></div>`,["note",U.note]))}
@@ -269,10 +269,10 @@ const bub=(t,p)=>(need(t,p)?`<div class="ds">${tfmt(t[2])}</div>`:"")+`<div clas
 const TI=D.msgs.findIndex(m=>m[0]===D.story.who),SI=D.msgs.findIndex(m=>m[0]===D.story.stalker),MI=D.msgs.findIndex(m=>m[0]===D.story.manager),MOMI=D.msgs.findIndex(m=>m[0]==="어머니");
 const ST={si:0,queue:D.story.segs[0].slice(1),gate:null,ready:false,news:false,final:false,fired:false};
 D.msgs[TI][1]=[D.story.segs[0][0]];
-const viewing=i=>cur===i&&$("#app").classList.contains("on");
+const viewing=i=>cur===i&&$("#app").classList.contains("on")&&!!A.querySelector(".chat");
 function giveSeg(si){const m=D.msgs[TI],seg=D.story.segs[si];ST.si=si;ST.queue=seg.slice(1);m[1].push(seg[0]);m[2]=1;badge();if(viewing(TI))thread(TI)}
 function playAuto(si){const seg=D.story.segs[si],m=D.msgs[TI];ST.si=si;ST.queue=[];let k=0;
- const step=()=>{if(k>=seg.length){segDone(si);return}
+ const step=()=>{if(k>=seg.length){if(si>=1&&si<4)ST.readTor=si;else segDone(si);return}
   const t=seg[k++],go=()=>{
    if(t[1]||t[4]){m[1].push(t);if(viewing(TI)){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}step()}
    else arrive(TI,[[t[0],t[2]]],()=>setTimeout(step,800))};
@@ -291,29 +291,28 @@ function momRead(){ST.momDone=true;
  setTimeout(()=>{const m=D.msgs[MOMI],t=D.story.momReply;m[1].push(t);if(viewing(MOMI)){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}},2000);
 
  chk("mom")}
+function leave(i){if(i===TI&&ST.readTor!=null){const q=ST.readTor;ST.readTor=null;segDone(q)}if(i===MOMI&&ST.momReady&&!ST.momDone)momRead();if(i===SI&&ST.gate!==null&&ST.ready)unlockGate()}
 function unlockGate(){const g=ST.gate;ST.gate=null;ST.ready=false;setTimeout(()=>playAuto(g+1),1600)}
 function segDone(si){setTimeout(()=>{
- if(si<3){ST.gate=si;ST.ready=false;arrive(SI,D.story.gates[si],()=>{ST.ready=true;if(viewing(SI))unlockGate()})}
+ if(si<3){ST.gate=si;ST.ready=false;arrive(SI,D.story.gates[si],()=>{ST.ready=true})}
  else if(si===3)arrive(MI,D.story.mgr);
  else ST.final=true},si===3?9000:1400)}
-function arrive(i,items,cb){const m=D.msgs[i],n=$("#notif");let tm;n.onclick=()=>{n.classList.remove("on");thread(i)};
+let tm;function arrive(i,items,cb){const m=D.msgs[i],n=$("#notif");
  items.forEach((it,k)=>setTimeout(()=>{const a=Array.isArray(it),tx=a?it[0]:it,t=[tx,0,a?it[1]:U.today+" "+hm()];m[1].push(t);
   if(viewing(i)){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}
   else{m[2]=1;badge();n.innerHTML=`<div class="ic">💬</div><div style="min-width:0"><b>${m[0]}</b><div class="tx">${pv(tx)}</div></div><small>${D.notify.now}</small>`;
-   n.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>n.classList.remove("on"),5000)}
+   n.onclick=()=>{n.classList.remove("on");thread(i)};n.classList.add("on");if(listOn&&$("#app").classList.contains("on"))open("msg");clearTimeout(tm);tm=setTimeout(()=>n.classList.remove("on"),5000)}
   if(k===items.length-1&&cb)cb()},1200+k*2800))}
-function thread(i){$("#notif").classList.remove("on");const m=D.msgs[i],had=m[2];m[2]=0;
- page(m[0],`<div class="chat">${m[1].map((t,j)=>bub(t,m[1][j-1])).join("")}</div>`,["msg",U.msgs]);cur=i;
+function thread(i){const p1=cur;$("#notif").classList.remove("on");const m=D.msgs[i],had=m[2];m[2]=0;
+ page(m[0],`<div class="chat">${m[1].map((t,j)=>bub(t,m[1][j-1])).join("")}</div>`,["msg",U.msgs]);cur=i;if(p1!==null&&p1!==i)leave(p1);
  const bd=A.querySelector(".body");bd.scrollTop=bd.scrollHeight;
  if(i===TI&&ST.queue.length)bd.onclick=()=>{if(!ST.queue.length)return;const t=ST.queue.shift();m[1].push(t);bd.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t,m[1][m[1].length-2]));bd.scrollTop=bd.scrollHeight;if(!ST.queue.length)segDone(ST.si)};
- if(i===MOMI&&ST.momReady&&!ST.momDone)momRead();
- if(i===SI&&ST.gate!==null&&ST.ready)unlockGate();
  if(had&&m[3]){const q=m[3];m[3]=null;q.forEach((t,k)=>setTimeout(()=>{m[1].push([t[0],0,U.today+" "+hm()]);
   if(viewing(i))thread(i);else m[2]=1},2200*(k+1)))}}
 function maybeNotify(){if(ST.final&&!ST.fired){ST.fired=true;arrive(TI,D.notify.texts)}}
 const N=D.news;
 function news(){page("뉴스",`<div style="padding:4px 18px 30px"><div style="font-size:11px;color:var(--sub)">${N.site}</div><div style="font-size:20px;font-weight:700;line-height:1.35;margin:6px 0">${N.title}</div><div style="font-size:13px;color:var(--sub);margin-bottom:6px">${N.sub}</div><div style="font-size:11px;color:var(--sub);padding-bottom:12px;border-bottom:1px solid var(--line)">${N.time}</div>${N.body.map(p=>`<p style="font-size:14px;line-height:1.75;margin:14px 0">${p}</p>`).join("")}</div>`,["msg",U.msgs]);
- if(!ST.news){ST.news=true;newsRead();setTimeout(()=>arrive(MOMI,D.story.mom,()=>{ST.momReady=true;if(viewing(MOMI))momRead()}),2200)}}
+ if(!ST.news){ST.news=true;newsRead();setTimeout(()=>arrive(MOMI,D.story.mom,()=>{ST.momReady=true}),2200)}}
 A.addEventListener("click",e=>{if(e.target.closest(".lnk"))news()});
 function safari(){page(U.fav,`<div class="fav">${U.favs.map(f=>`<div><span>${f[0]}</span>${f[1]}</div>`).join("")}</div>`,null,`<div class="sbar" id="sb">🔍 ${U.sfph}</div>`);
  $("#sb").onclick=()=>{A.innerHTML=`<div class="sh"><div class="sin">🔍 ${U.sfph}</div><button id="cn">${U.cancel}</button></div><div class="body"><div class="sec">${U.recentS}</div>${D.search.map(x=>`<div class="row">🔍&nbsp;${x}<small>↖</small></div>`).join("")}</div>`;$("#cn").onclick=safari;
