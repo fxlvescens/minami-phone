@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>minatora</title>
 <style>
 :root{--bg:#e9e9ec;--ink:#111;--sub:#8a8a90;--line:#e4e4e8;--card:#fff}
@@ -96,36 +95,6 @@ body{background:var(--bg);display:flex;align-items:center;justify-content:center
 #notif b{display:block;font-size:13px}#notif .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#333}#notif small{margin-left:auto;color:#8a8a90;font-size:11px;align-self:flex-start;flex:none}
 #status{background:transparent;transition:color .2s}#status.hide{display:none}#status.dk{color:#111}.rt{display:inline-flex;align-items:center;gap:6px}
 #status.dk~#homebar{background:#111}
-#home{overflow-y:auto;padding-bottom:112px}body{overscroll-behavior:none;touch-action:manipulation}
-@supports(height:100dvh){html,body{height:100dvh}}
-#lock{overflow-y:auto;padding-bottom:40px}
-@media (max-width:520px),(pointer:coarse) and (max-width:900px){body{align-items:stretch;justify-content:stretch}#phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none}#screen{border-radius:0}}
-#lock{padding-top:min(80px,8dvh)}#lock .t{font-size:min(64px,9dvh);margin-bottom:min(26px,3dvh)}
-#pad{grid-template-columns:repeat(3,min(64px,8.5dvh));gap:min(12px,1.6dvh)}#pad button{height:min(64px,8.5dvh)}
-.pl{overflow-y:auto}.big{width:min(100%,38vh);width:min(100%,38dvh);align-self:center}
-#wg{width:min(100%,calc(100dvh - 215px));margin:0 auto}
-#home .grid{align-content:start}
-@media (max-width:520px),(pointer:coarse) and (max-width:900px){
-#status{height:46px;font-size:15px;padding:12px 26px 0}
-#home{padding:56px 20px 130px}
-#wg{width:100%;gap:8px 16px}
-.lb{font-size:13px}
-#home .grid{gap:18px 6px;padding-top:6px}
-.app{font-size:12px;gap:7px}
-.app span{width:66px;height:66px;border-radius:16px}
-.app span svg{width:38px;height:38px}
-.badge{font-size:13px;top:-8px;right:-10px}
-#dock{left:14px;right:14px;bottom:26px;height:96px;border-radius:32px}
-#homebar{width:140px;height:5px;bottom:9px}
-}
-@media (max-width:520px) and (min-aspect-ratio:1/2),(pointer:coarse) and (max-width:900px) and (min-aspect-ratio:1/2){
-#home{padding:50px 16px 112px}#wg{gap:6px 12px}#home .grid{gap:12px 4px}
-.app span{width:60px;height:60px}.app span svg{width:34px;height:34px}
-#dock{height:86px;bottom:20px}}
-@media (max-width:520px) and (max-aspect-ratio:1/2),(pointer:coarse) and (max-width:900px) and (max-aspect-ratio:1/2){
-#home{padding:78px 20px 150px}#wg{gap:12px 18px}#home .grid{gap:30px 6px;padding-top:14px}
-.app span{width:70px;height:70px;border-radius:17px}.app span svg{width:40px;height:40px}
-#dock{height:104px;bottom:34px;border-radius:34px}#homebar{bottom:12px}}
 </style></head><body>
 <div id="phone"><div id="screen">
 <div id="status" class="hide"><span id="clock">--:--</span><span class="rt"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx=".8" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx=".8" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx=".8" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M1 4a10 10 0 0114 0M3.5 6.6a6.5 6.5 0 019 0M6 9a3 3 0 014 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="bat"><span id="pct">23</span>%<i><b></b></i></span></span></div>
