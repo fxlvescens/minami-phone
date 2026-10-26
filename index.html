@@ -95,6 +95,10 @@ body{background:var(--bg);display:flex;align-items:center;justify-content:center
 #notif b{display:block;font-size:13px}#notif .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#333}#notif small{margin-left:auto;color:#8a8a90;font-size:11px;align-self:flex-start;flex:none}
 #status{background:transparent;transition:color .2s}#status.hide{display:none}#status.dk{color:#111}.rt{display:inline-flex;align-items:center;gap:6px}
 #status.dk~#homebar{background:#111}
+#home{overflow-y:auto;padding-bottom:112px}body{overscroll-behavior:none;touch-action:manipulation}
+@supports(height:100dvh){html,body{height:100dvh}}
+#lock{overflow-y:auto;padding-bottom:40px}
+@media (max-width:520px),(pointer:coarse) and (max-width:900px){body{align-items:stretch;justify-content:stretch}#phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none}#screen{border-radius:0}}
 </style></head><body>
 <div id="phone"><div id="screen">
 <div id="status" class="hide"><span id="clock">--:--</span><span class="rt"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx=".8" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx=".8" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx=".8" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M1 4a10 10 0 0114 0M3.5 6.6a6.5 6.5 0 019 0M6 9a3 3 0 014 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="bat"><span id="pct">23</span>%<i><b></b></i></span></span></div>
