@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>캐릭터의 휴대폰</title>
+<style>
+:root{--bg:#e9e9ec;--ink:#111;--sub:#8a8a90;--line:#e4e4e8;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1e}}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","Hiragino Sans","Noto Sans JP",sans-serif}
+#phone{width:340px;height:min(700px,94%);border-radius:42px;background:#000;padding:9px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+#screen{position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:linear-gradient(160deg,#8d99ae,#2b2d42);color:#fff}
+#status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;justify-content:space-between;align-items:center;padding:6px 22px 0;font-size:13px;font-weight:600;z-index:20;pointer-events:none}
+.bat{display:inline-flex;align-items:center;gap:4px}.bat i{width:22px;height:11px;border:1.5px solid currentColor;border-radius:3px;position:relative;display:inline-block}
+.bat i b{position:absolute;left:1px;top:1px;bottom:1px;width:20%;background:#ff453a;border-radius:1px}
+.view{position:absolute;inset:0;display:none;flex-direction:column}.view.on{display:flex}
+#lock{align-items:center;padding-top:80px;z-index:15;background:linear-gradient(160deg,#8d99ae,#2b2d42)}
+#lock .d{font-size:14px;opacity:.85}#lock .t{font-size:64px;font-weight:300;line-height:1.1;margin-bottom:26px}
+#dots{display:flex;gap:12px;margin:6px 0 18px}#dots span{width:11px;height:11px;border-radius:50%;border:1.5px solid #fff}#dots span.f{background:#fff}
+#pad{display:grid;grid-template-columns:repeat(3,64px);gap:12px}
+#pad button{height:64px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:24px;cursor:pointer}
+#pad button:active{background:rgba(255,255,255,.4)}#pad .x{background:none;font-size:13px}
+.shake{animation:sh .35s}@keyframes sh{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+#hint{font-size:12px;opacity:.7;height:16px;margin-bottom:6px}
+#home{padding:44px 14px 24px}#home .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 10px}
+.app{background:none;border:0;color:#fff;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:0}
+.app span{width:52px;height:52px;border-radius:13px;background:rgba(255,255,255,.88);color:#333;display:flex;align-items:center;justify-content:center;font-size:24px}
+#homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:110px;height:5px;border-radius:3px;background:#fff;opacity:.85;border:0;padding:0;cursor:pointer;z-index:30}
+.appv{background:var(--card);color:var(--ink);z-index:10;padding-top:38px}
+.appv.dk{background:#fff}
+.hd{padding:6px 18px 10px;font-size:22px;font-weight:700}
+.back{font-size:13px;color:#3478f6;border:0;background:none;padding:0 18px 4px;text-align:left;cursor:pointer}
+.body{flex:1;overflow:auto;padding-bottom:30px}
+.row{padding:12px 18px;border-bottom:1px solid var(--line);font-size:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.row small,.sub{color:var(--sub);font-size:12px}.red{color:#e5342b}
+.chat{padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.b{max-width:76%;padding:8px 12px;border-radius:16px;font-size:14px;line-height:1.4;background:#e9e9eb}
+.b.me{align-self:flex-end;background:#3478f6;color:#fff}
+.note p{margin:0;padding:16px 18px;font-size:14px;line-height:1.7;white-space:pre-wrap}
+.pdfp{margin:12px;padding:20px 18px;background:#fff;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.08);font-size:13px;line-height:1.9;white-space:pre-wrap;font-family:"Noto Serif KR","Batang","Hiragino Mincho ProN","Noto Serif JP",serif}
+.pdfp b{display:block;text-align:center;margin-bottom:10px}
+.hl{background:#fff3a0}
+.play{padding:18px;text-align:center}.cover{width:150px;height:150px;border-radius:14px;margin:6px auto 14px;background:linear-gradient(135deg,#b8c0ff,#5e60ce)}
+.ctl{display:flex;justify-content:center;gap:26px;font-size:24px;margin-top:10px}.ctl span{cursor:pointer}
+.bar{height:3px;background:var(--line);margin:14px 20px 4px;border-radius:2px}.bar i{display:block;height:100%;width:34%;background:#111;border-radius:2px}
+.app span{position:relative}.badge{position:absolute;top:-7px;right:-9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:700;border-radius:10px;padding:1px 6px;line-height:1.3}
+.sh{display:flex;gap:10px;align-items:center;padding:8px 14px}.sin{flex:1;background:#eeeef1;border-radius:10px;padding:8px 10px;font-size:14px;color:var(--sub)}#cn{border:0;background:none;color:#3478f6;font-size:15px;cursor:pointer}
+.sec{font-weight:700;padding:12px 18px;font-size:15px}.sbar{margin:8px 14px 24px;background:#eeeef1;border-radius:12px;padding:11px;text-align:center;font-size:14px;color:#555;cursor:pointer}
+.fav{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:10px 18px;font-size:10px;text-align:center}.fav span{display:flex;width:52px;height:52px;margin:0 auto 5px;border-radius:12px;background:#eeeef1;align-items:center;justify-content:center;font-size:22px}
+.art{width:46px;height:46px;border-radius:6px;flex:none}.mrow{display:flex;gap:12px;align-items:center;padding:7px 18px;cursor:pointer;font-size:14px}.mrow small{display:block;color:var(--sub);font-size:12px}
+.mini{display:flex;align-items:center;gap:10px;margin:0 10px 4px;padding:8px 12px;background:#f2f2f7;border-radius:12px;cursor:pointer;font-size:13px}.mini .art{width:36px;height:36px}.mini div{flex:1}
+.tabs{display:flex;justify-content:space-around;padding:8px 0 24px;font-size:10px;color:#8a8a90;border-top:1px solid var(--line)}.tabs .on2{color:#fa2d48}
+.pl{position:absolute;inset:0;z-index:5;color:#fff;padding:46px 28px 34px;display:flex;flex-direction:column}.pl button{background:none;border:0;color:#fff;cursor:pointer}
+.big{width:100%;aspect-ratio:1;border-radius:12px;margin:16px 0;box-shadow:0 12px 30px rgba(0,0,0,.35)}.tm{display:flex;justify-content:space-between;font-size:11px;opacity:.7}
+.pl .bar{background:rgba(255,255,255,.3);margin:14px 0 4px}.pl .bar i{background:#fff}
+.pdf{display:inline-block;background:#e5342b;color:#fff;font-size:9px;font-weight:700;border-radius:4px;padding:3px 4px;margin-right:6px}
+.bw{display:flex;flex-direction:column;align-self:flex-start;max-width:78%}.bw.me{align-self:flex-end;align-items:flex-end}.bw .b{max-width:100%}.bw small{font-size:10px;color:var(--sub);margin:2px 6px}
+.row>div{min-width:0}.row>div>small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px}
+.wd{border-radius:22px;padding:14px 16px;margin-bottom:12px;height:150px}
+.wx{background:linear-gradient(160deg,#5b9bf5,#2f5fc4);color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+.wx .tp{display:flex;justify-content:space-between;align-items:flex-start}.wx .big2{font-size:42px;font-weight:300;line-height:1}
+.wx .hrs{display:flex;justify-content:space-between;text-align:center;font-size:11px}.wx .hrs div{display:flex;flex-direction:column;gap:3px;align-items:center}
+.nt{background:#fff;color:#111;height:130px;overflow:hidden;cursor:pointer;margin-bottom:16px}.nt h4{margin:0 0 6px;font-size:13px;color:#e8a800;display:flex;justify-content:space-between}
+.nt p{margin:0;font-size:13px;line-height:1.55;white-space:pre-wrap}
+#dock{position:absolute;left:10px;right:10px;bottom:22px;height:76px;border-radius:26px;background:rgba(255,255,255,.28);backdrop-filter:blur(12px);display:flex;justify-content:space-around;align-items:center}
+#wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#wg .wd{height:auto;aspect-ratio:1;margin:0;padding:13px;overflow:hidden;position:relative}
+.wx{background:radial-gradient(circle at 88% 6%,rgba(255,226,140,.7),transparent 42%),linear-gradient(170deg,#4f9bf0,#2a5db8);color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+.wx .city{font-size:13px;font-weight:600}.wx .big2{font-size:46px;font-weight:300;line-height:1;margin-top:2px}.wx .bt{font-size:12px;line-height:1.35}.wx .bt b{font-size:13px}
+#wg .nt{background:#fff;color:#111}#wg .nt h4{font-size:12px;margin:0 0 6px}#wg .nt p{font-size:11.5px;line-height:1.5}
+.cal{background:#fff;color:#111;display:flex;flex-direction:column}.cal .wk{color:#e5342b;font-size:12px;font-weight:700}.cal .dn{font-size:44px;font-weight:300;line-height:1.05}.cal .ev{font-size:12px;color:#8a8a90;margin-top:auto}
+#home .grid{grid-template-columns:repeat(2,1fr);gap:14px 4px;align-content:center}
+.wx{background:linear-gradient(180deg,#3d66a5,#7096cc);display:block!important}
+#wg .wx{padding:13px 14px}
+.wx .city{font-size:14px;font-weight:600;opacity:.95;line-height:1.2}
+.wx .big2{font-size:46px;font-weight:300;line-height:1;margin-top:3px;opacity:.92;text-shadow:0 1px 6px rgba(0,0,0,.15)}
+.wx .bt{position:absolute;left:14px;right:14px;bottom:12px;line-height:1.35}
+.wx .bt svg{display:block;margin-bottom:3px;opacity:.9}
+.wx .bt b{display:block;font-size:13px;font-weight:500;opacity:.9}
+.wx .bt span{display:block;font-size:12px;opacity:.78}
+#wg{gap:6px 12px;align-items:start}.cell{display:flex;flex-direction:column;gap:5px}.lb{color:#fff;font-size:11px;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+#wg .wd{padding:0;container-type:inline-size;position:relative;width:100%;border-radius:22px}
+.in{position:absolute;inset:0;padding:9cqw 10cqw 8cqw;display:flex;flex-direction:column}
+.wx .city{font-size:8.3cqw;font-weight:600;opacity:1;line-height:1.2}
+.wx .big2{font-size:25cqw;font-weight:300;line-height:1;margin-top:1cqw;opacity:.95}
+.wx .bt{position:static;margin-top:auto;line-height:1.35}
+.wx .bt svg{width:10cqw;height:10cqw;margin-bottom:1cqw}
+.wx .bt b{font-size:7.6cqw;font-weight:500;opacity:.95}.wx .bt span{font-size:7.6cqw;opacity:.85}
+.cal .wk{color:#111;font-size:7.4cqw;font-weight:600}.cal .dn{font-size:25cqw;font-weight:300;line-height:1.05}.cal .ev{font-size:8.2cqw;color:#9a9a9f;margin-top:auto}
+.nt .hh{color:#e8a800;font-size:7.6cqw;font-weight:700;margin-bottom:1.5cqw}.nt .tt{font-size:7.6cqw;font-weight:700;margin-bottom:1cqw}
+.nt .ln{font-size:7cqw;line-height:1.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ds{text-align:center;font-size:11px;color:var(--sub);margin:8px 0 2px}
+#notif{position:absolute;top:38px;left:10px;right:10px;z-index:40;background:rgba(245,245,247,.94);color:#111;border-radius:20px;padding:10px 12px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25);transform:translateY(-170px);opacity:0;pointer-events:none;transition:transform .35s,opacity .35s;cursor:pointer;font-size:12px}
+#notif.on{transform:none;opacity:1;pointer-events:auto}#notif .ic{width:30px;height:30px;border-radius:8px;background:linear-gradient(#6fe583,#1fb83d);flex:none;display:flex;align-items:center;justify-content:center;font-size:16px}
+#notif b{display:block;font-size:13px}#notif .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#333}#notif small{margin-left:auto;color:#8a8a90;font-size:11px;align-self:flex-start;flex:none}
+#status{background:transparent;transition:color .2s}#status.hide{display:none}#status.dk{color:#111}.rt{display:inline-flex;align-items:center;gap:6px}
+#status.dk~#homebar{background:#111}
+</style></head><body>
+<div id="phone"><div id="screen">
+<div id="status" class="hide"><span id="clock">--:--</span><span class="rt"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx=".8" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx=".8" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx=".8" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M1 4a10 10 0 0114 0M3.5 6.6a6.5 6.5 0 019 0M6 9a3 3 0 014 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="bat"><span id="pct">23</span>%<i><b></b></i></span></span></div>
+
+<div class="view on" id="lock">
+ <div class="d" id="date"></div><div class="t" id="big">--:--</div>
+ <div id="hint"></div><div id="dots"><span></span><span></span><span></span><span></span></div>
+ <div id="pad"></div>
+</div>
+
+<div class="view" id="home"><div id="wg"><div class="cell"><div class="wd wx" id="wx"></div><div class="lb" id="l1"></div></div><div class="cell"><div class="wd nt" id="nw"></div><div class="lb" id="l2"></div></div><div class="cell"><div class="wd cal" id="cal"></div><div class="lb" id="l3"></div></div><div class="grid" id="grid"></div></div><div id="dock"></div></div>
+<div class="view appv" id="app"></div>
+<div id="notif"></div>
+<button id="homebar" aria-label="home"></button>
+</div></div>
+
+<script>
+/* ===== 문구/설정은 전부 여기(D) ===== 나중에 일본어로 바꿀 때도 이 블록만 교체 */
+const D={
+ locale:"ko-KR", tz:"Asia/Tokyo", pass:"0608", battery:23,
+ notify:{from:"미도 토라오",texts:["내가 애매한 걸 싫어해서","무슨 말 하고 싶은 건지 알지?","이따 봐"],now:"지금"},
+ widget:{city:"도쿄",temp:"17°",cond:"구름 조금",hl:"최고:20° 최저:13°",hours:[["지금","⛅","17°"],["15시","☀️","19°"],["18시","⛅","16°"],["21시","🌙","14°"],["24시","🌙","13°"]]},
+ ui:{lbWx:"날씨",lbNt:"메모",lbCal:"캘린더",calnone:"오늘 이벤트 없음",today:"오늘",hint:"비밀번호를 입력하세요",wrong:"비밀번호가 틀렸습니다",home:"홈",
+  apps:[["call","전화","📞"],["msg","메시지","💬"],["search","Safari","🧭"],["note","메모","📝"],["music","음악","🎵"],["pdf","PDF","📄"],["line","LINE","L",999]],
+  recent:"최근 통화",msgs:"메시지",fav:"즐겨찾기",sfph:"검색 또는 웹사이트 이름 입력",cancel:"취소",recentS:"최근 검색",note:"메모",lib:"라이브러리",docs:"문서",recentItem:"최근 연 항목",
+  tabs:["지금 듣기","둘러보기","라이브러리","검색"],favs:[["📰","뉴스"],["🗺️","지도"],["☁️","날씨"],["▶️","동영상"]]},
+ calls:[["+81 90-5521-8847","부재중 (7)","어제 23:58",1],["매니저님","부재중","어제 21:40",1],["알 수 없는 번호","부재중 (3)","어제 03:12",1],["호시카게 사장님","수신 · 3분","어제 19:20",0],["어머니","발신 · 4분","어제 18:05",0],["사쿠라이 감독님","부재중","10/24 22:10",1],["유키(Re:vale)","발신 · 2분","10/24 15:30",0],["미도 토라오","수신 · 6분","10/23 23:02",0],["프로듀서 카노","부재중","10/23 11:12",1],["어머니","부재중","10/21 20:30",1]],
+ /* [텍스트, 1=내가 보낸 것] */
+ msgs:[
+  /* [이름, [[텍스트,1=내가 보냄,시간]...], 안읽음 1/0, 읽으면 뒤따라 오는 문자] */
+  ["+81 90-5521-8847",[["미나미 군, 오늘 촬영 수고했어요.",0,"어제 22:41"],["오늘 파란 코트 입고 있었죠? 잘 어울렸어요.",0,"어제 22:42"],["내일도 같은 시간에 나오는 거죠?",0,"어제 22:43"],["답장 안 해 줘도 괜찮아요. 항상 보고 있으니까.",0,"어제 23:59"]],1,
+   [["지금 문자 보신 거죠? 다 떠요.",0],["읽음 표시 뜨는 거 알고 있어요. 바쁘시구나.",0],["답장 기다릴게요. 오래 기다리는 거 잘해요.",0]]],
+  ["+81 80-3392-1175",[["나츠메 미나미 씨 본인 맞으시죠?",0,"어제 20:14"],["〈그해 겨울〉 때부터 팬이에요. 선물 전해드리고 싶은데 어디로 가면 될까요?",0,"어제 20:15"]],1,
+   [["읽어 주셨네요! 감사해요.",0],["내일 촬영장 앞에서 기다리고 있을게요.",0]]],
+  ["+81 50-1234-5678",[["【택배 안내】 고객님 앞으로 온 짐을 보관 중입니다. 확인 부탁드립니다.",0,"오늘 03:20"]],1],
+  ["니카이도 야마토(IDOLiSH7)",[["나츠메 쨩, 그 녀석이랑 대화는 좀 해 봤어?",0,"어제 15:02"],["어제 유키 씨가 먼저 말을 걸어주셔서 잠깐요.",1,"어제 15:20"]],0],
+  /* 토라오: 처음엔 첫 말풍선만, 화면을 터치할 때마다 m[4]의 말풍선이 하나씩 추가됨. [텍스트,1=미나미,시간,(날짜 구분선)] */
+  ["미도 토라오",[["너 정말로 모른 척 할 셈인가 본데",0,"9/6 22:14","9월 6일"]],1,null,[
+   ["솔직히 나쁘지 않았잖아?",0,"9/6 22:14"],["그러니까 연락 좀 달라고",0,"9/6 22:15"],["내가 남자한테 매달리게 될 줄은 몰랐는데 말이야",0,"9/6 22:16"],
+   ["... 당신 정말 끈질기네요",1,"9/6 22:41"],["갖고 싶은 건 가져야 되는 성격이라서",0,"9/6 22:42"],["어제 봤던 바에서 다시 만나",0,"9/6 22:43"],
+   ["드라이브 시켜 주세요",1,"9/19 21:08","9월 19일"],["네가 먼저 연락하는 건 처음이네",0,"9/19 21:12"],["나쁜가요?",1,"9/19 21:13"],["나쁘단 건 아니고",0,"9/19 21:14"],["나와",0,"9/19 21:14"],
+   ["네가 좋다던 작곡가 공연 티켓 있는데",0,"10/3 19:30","10월 3일"],["정말 화 안 풀 거야?",0,"10/3 19:31"],["미나미",0,"10/3 19:31"],
+   ["제가 나빴어요",1,"10/10 23:02","10월 10일"],["알면 됐어",0,"10/10 23:05"]]],
+  ["어머니",[["드라마, 시청률이 좋았다고 하더군요.",0,"어제 20:10"],["그렇군요.",1,"어제 20:42"],["취재는 전부 받으세요.",0,"어제 20:43"],["알겠습니다.",1,"어제 20:50"],["다음에도 부탁합니다.",0,"어제 20:51"]],0],
+  ["매니저님",[["다음 주 연습은 10시 입실입니다.",0,"어제 20:00"],["알겠습니다.",1,"어제 20:03"]],0],
+  ["유키(Re:vale)",[["유키 씨, 나츠메입니다. 이번 촬영도 잘 부탁드려요.",1,"10/24 15:42"],["잘 부탁해, 나츠메 군.",0,"10/24 15:44"],["어제 현장에서 많이 배웠습니다. 감사합니다.",1,"어제 09:12"],["다음 주 대본 리딩도 잘 부탁드립니다.",1,"어제 09:14"]],0],
+  ["사쿠라이 감독님",[["나츠메 군, 이번 드라마 어떻게 나와줄 수 없겠어?",0,"10/24 22:12"],["대본은 나츠메 군에게 맞춰서 고칠 수 있어. 한번 얘기 좀 하자.",0,"10/24 22:13"]],0],
+  ["프로듀서 카노",[["나츠메 군, 이번 기획 한 번만 다시 생각해 줄 수 없을까? 연락 기다릴게요.",0,"10/23 11:20"]],0]],
+ search:["분위기 좋은 바 도쿄","도쿄 바 혼자 가기 좋은 곳","시부야 맛집 개인실","긴자 스시 맛집 예약","도쿄 심야 라멘 맛집","혼밥 하기 좋은 맛집 도쿄","도쿄 클래식 공연 일정","피아노 리사이틀 도쿄 올해","취미 추천","혼자 하는 취미 추천","30대 후반 여성 선물 추천","어머니 선물 추천 30대 후반 여성"],
+ notes:[["연습 메모","・어미를 떨어뜨리지 않기\n・간을 반 박자 더 기다리기\n・시선은 상대의 조금 안쪽\n・물 마시기"],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
+ music:[["달빛","드뷔시"],["녹턴 2번 내림마장조","쇼팽"],["라 캄파넬라","리스트"],["혁명 에튀드","쇼팽"],["피아노 협주곡 2번","라흐마니노프"],["프렐류드 다장조","바흐"],["월광 소나타 1악장","베토벤"],["사랑의 꿈 3번","리스트"],["꽃다발","back number"]],
+ /* [파일명, 제목, 주인공 역할명(형광펜), 본문] */
+ script:[
+  ["역_승강장에서_2장.pdf","제1막 제2장","하루카","(밤. 역 승강장.\n 아무도 없다.)\n\n하루카  “……안 올 거라고 생각했어.”\n\n(사이)\n\n하루카  “아니, 아니야.\n         오지 않았으면 했던 걸지도.”"],
+  ["역_승강장에서_3장.pdf","제1막 제3장","하루카","(아침. 대기실.)\n\n하루카  “다시 한 번, 처음부터\n         하게 해 주세요.”\n\n(사이)\n\n하루카  “……부탁드립니다.”"],
+  ["그해겨울_3화.pdf","〈그해 겨울, 너에게〉 제3화","이쓰키","S#14 눈 내리는 버스 정류장 / 밤\n\n이쓰키  “우산, 하나밖에 없는데.”\n\n사야  “괜찮아. 같이 쓰면 되잖아.”"],
+  ["월요일의탐정_1화.pdf","〈월요일의 탐정〉 제1화","카미야","S#3 탐정 사무소 / 낮\n\n카미야  “의뢰인은 거짓말을 하고 있어. 찻잔이 아직 따뜻하거든.”\n\n조수  “그걸 어떻게……?”"],
+  ["파도가닿는곳_7화.pdf","〈파도가 닿는 곳〉 제7화","료","S#22 방파제 / 새벽\n\n료  “돌아오겠다고 말한 적 없어.”\n\n나기사  “알아. 그래도 기다릴게.”"],
+  ["교실밖의별_2화.pdf","〈교실 밖의 별〉 제2화","소라","S#8 옥상 / 저녁\n\n소라  “선생님은 어른이라서 모르는 거예요.”\n\n선생님  “그래. 그러니까 알려 줘.”"],
+  ["종이비행기클럽_5화.pdf","〈종이비행기 클럽〉 제5화","토모","S#31 체육관 뒤 / 낮\n\n토모  “날지 못해도 괜찮아. 던지는 게 중요한 거니까.”\n\n부원들  “……한 번 더!”"],
+  ["마지막한곡_9화.pdf","〈마지막 한 곡〉 제9화","렌","S#40 콘서트홀 무대 뒤 / 밤\n\n렌  “손이 떨려요.”\n\n스승  “떨리는 건 아직 소리를 사랑한다는 뜻이야.”"],
+  ["여름의문턱_최종화.pdf","〈여름의 문턱〉 최종화","하루","S#55 기차역 / 아침\n\n하루  “편지, 끝까지 읽었어.”\n\n미오  “……답장은 필요 없어.”"],
+  ["새벽두시의라디오_4화.pdf","〈새벽 두 시의 라디오〉 제4화","케이","S#12 방송실 / 심야\n\n케이  “여기는 새벽 두 시. 잠 못 드는 당신에게 보내는 노래입니다.”"],
+  ["형사사쿠라가와_6화.pdf","〈형사 사쿠라가와〉 제6화","사쿠라가와","S#27 취조실 / 낮\n\n사쿠라가와  “알리바이는 완벽하군. 완벽해서 이상해.”\n\n용의자  “증거가 있습니까.”"],
+  ["사라진우산가게_8화.pdf","〈사라진 우산 가게〉 제8화","아키라","S#19 빗속 골목 / 밤\n\n아키라  “이 가게는 비 오는 날에만 열려요.”\n\n노인  “그리고 우산이 필요한 사람에게만.”"],
+  ["두번째봄_10화.pdf","〈두 번째 봄〉 제10화","요시노","S#44 벚나무 아래 / 낮\n\n요시노  “처음 만났던 날이랑 똑같네요.”\n\n할머니  “아니, 그날은 네가 울고 있었지.”"],
+  ["거울속형제_1화.pdf","〈거울 속 형제〉 제1화","유우","S#2 거실 / 아침\n\n유우  “넌 내가 아니야.”\n\n거울 속의 유우  “알아. 그래서 무서운 거야.”"]]
+};
+/* ============================================ */
+const $=s=>document.querySelector(s),U=D.ui,A=$("#app");
+function tick(){const t=new Date().toLocaleTimeString(D.locale,{timeZone:D.tz,hour:"2-digit",minute:"2-digit",hour12:false});
+ $("#clock").textContent=t;$("#big").textContent=t;
+ $("#date").textContent=new Date().toLocaleDateString(D.locale,{timeZone:D.tz,month:"long",day:"numeric",weekday:"long"})}
+tick();setInterval(tick,10000);
+$("#pct").textContent=D.battery;$(".bat b").style.width=(D.battery*.19)+"%";
+if(D.battery>20)$(".bat b").style.background="currentColor";
+$("#hint").textContent=U.hint;
+let code="";
+"123456789 0<".split("").forEach(k=>{const b=document.createElement("button");
+ if(k===" "){b.className="x";b.disabled=true}else{b.textContent=k==="<"?"⌫":k;b.onclick=()=>press(k)}
+ $("#pad").appendChild(b)});
+function dots(){document.querySelectorAll("#dots span").forEach((s,i)=>s.classList.toggle("f",i<code.length))}
+function press(k){if(k==="<")code=code.slice(0,-1);else if(code.length<4)code+=k;dots();
+ if(code.length===4){if(code===D.pass){show("home");code="";dots();$("#hint").textContent=U.hint}
+  else{$("#dots").classList.add("shake");$("#hint").textContent=U.wrong;
+   setTimeout(()=>{$("#dots").classList.remove("shake");code="";dots()},400)}}}
+function show(id){$("#status").classList.toggle("hide",id==="lock");if(id!=="app")$("#status").classList.remove("dk");if(id==="home"){if(typeof badge==="function")badge();maybeNotify()}["lock","home","app"].forEach(v=>$("#"+v).classList.toggle("on",v===id))}
+$("#homebar").onclick=()=>{if($("#home").classList.contains("on"))show("lock");else if(!$("#lock").classList.contains("on"))show("home")};
+const P=(c,d)=>`<svg viewBox="0 0 24 24" width="30" height="30">${d}</svg>`;
+const IC={
+ call:["linear-gradient(#6fe583,#1fb83d)",P(0,'<path fill="#fff" d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25c1.1.4 2.3.6 3.6.6a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1z"/>')],
+ msg:["linear-gradient(#6fe583,#1fb83d)",P(0,'<ellipse cx="12" cy="11" rx="9.5" ry="7.5" fill="#fff"/><path d="M5.5 16.5L3.5 21l5.5-2.8z" fill="#fff"/>')],
+ search:["#fff",P(0,'<circle cx="12" cy="12" r="10" fill="#eef4ff" stroke="#3a86f7" stroke-width="1.6"/><path d="M16.5 7.5l-2.6 6.4-6.4 2.6 2.6-6.4z" fill="#fff"/><path d="M16.5 7.5l-2.6 6.4-3.8-3.8z" fill="#ff3b30"/><path d="M7.5 16.5l2.6-6.4 3.8 3.8z" fill="#8e8e93"/>')],
+ note:["linear-gradient(#ffd23f 0 28%,#fff 28%)",P(0,'<path d="M5 10h14M5 14h14M5 18h10" stroke="#e5e5ea" stroke-width="1.2"/>')],
+ music:["linear-gradient(#ff6a80,#fa2d48)",P(0,'<path fill="#fff" d="M9 5.5l9-2v11.2a2.7 2.7 0 11-1.5-2.4V7L10.5 8.2v9.5a2.7 2.7 0 11-1.5-2.4z"/>')]};
+const byK=Object.fromEntries(U.apps.map(a=>[a[0],a]));
+function mk(a,dk){const [k,n,i,bd]=a,b=document.createElement("button");b.className="app";
+ const st=IC[k]?`background:${IC[k][0]}`:k==="line"?"background:#06c755;color:#fff;font-weight:800;font-size:20px":"";
+ b.innerHTML=`<span style="${st}">${IC[k]?IC[k][1]:i}${k==="msg"?'<em class="badge" id="msgb" style="font-style:normal"></em>':bd?`<em class="badge" style="font-style:normal">${bd}+</em>`:""}</span>${dk?"":n}`;
+ if(k!=="line")b.onclick=()=>open(k);(dk?$("#dock"):$("#grid")).appendChild(b)}
+const DK=["call","search","msg","music"];
+DK.forEach(k=>mk(byK[k],1));U.apps.filter(a=>!DK.includes(a[0])).forEach(a=>mk(a,0));
+function badge(){const n=D.msgs.filter(m=>m[2]).length,e=$("#msgb");e.textContent=n;e.style.display=n?"":"none"}badge();
+const W=D.widget;
+$("#l1").textContent=U.lbWx;$("#l2").textContent=U.lbNt;$("#l3").textContent=U.lbCal;
+$("#wx").innerHTML=`<div class="in"><div class="city">${W.city} ➤</div><div class="big2">${W.temp}</div><div class="bt"><svg viewBox="0 0 24 24"><path fill="#fff" d="M7 18a4 4 0 01-.5-8 5.5 5.5 0 0110.6 1.3A3.4 3.4 0 0117 18z"/></svg><b>${W.cond}</b><br><span>${W.hl}</span></div></div>`;
+$("#nw").innerHTML=`<div class="in"><div class="hh">${U.note}</div><div class="tt">${D.notes[0][0]}</div>${D.notes[0][1].split("\n").map(l=>`<div class="ln">${l}</div>`).join("")}</div>`;
+$("#nw").onclick=()=>open("note");
+function cal(){const o={timeZone:D.tz},d=new Date();
+ $("#cal").innerHTML=`<div class="in"><div class="wk">${d.toLocaleDateString(D.locale,{...o,weekday:"long"})}</div><div class="dn">${d.toLocaleDateString(D.locale,{...o,day:"numeric"}).replace(/\D/g,"")}</div><div class="ev">${U.calnone}</div></div>`}
+cal();setInterval(cal,60000);
+let cur=null;function page(title,html,back,foot){cur=null;$("#status").classList.add("dk");A.innerHTML=`<button class="back" id="bk">‹ ${back?back[1]:U.home}</button><div class="hd">${title}</div><div class="body">${html}</div>${foot||""}`;
+ $("#bk").onclick=back?()=>open(back[0]):()=>show("home");show("app")}
+function bind(sel,fn){A.querySelectorAll(sel).forEach(e=>e.onclick=()=>fn(+e.dataset.i))}
+function open(k){
+ if(k==="call")page(U.recent,D.calls.map(c=>`<div class="row"><div><div class="${c[3]?"red":""}">${c[0]}</div><small>${c[1]}</small></div><small>${c[2]}</small></div>`).join(""));
+ if(k==="msg"){page(U.msgs,D.msgs.map((m,i)=>{const l=m[1][m[1].length-1];return `<div class="row" style="cursor:pointer" data-i="${i}"><div><div>${m[0]}</div><small>${l[0]}</small></div><small>${l[2]} ${m[2]?'<span style="color:#3478f6">●</span>':''}</small></div>`}).join(""));bind("[data-i]",thread)}
+ if(k==="search")safari();
+ if(k==="note"){page(U.note,D.notes.map((x,i)=>`<div class="row" style="cursor:pointer" data-i="${i}"><div>${x[0]}<br><small>${x[1].split("\n")[0]}</small></div></div>`).join(""));
+  bind("[data-i]",i=>page(D.notes[i][0],`<div class="note"><p>${D.notes[i][1]}</p></div>`,["note",U.note]))}
+ if(k==="music")lib(0);
+ if(k==="pdf"){page(U.docs,D.script.map((s,i)=>`<div class="row" style="cursor:pointer" data-i="${i}"><div><span class="pdf">PDF</span>${s[0]}<br><small>${U.recentItem}</small></div></div>`).join(""));
+  bind("[data-i]",i=>{const s=D.script[i];page(s[0],`<div class="pdfp"><b>${s[1]}</b>${s[3].replace(new RegExp("^"+s[2]+"  “[^”]*”","gm"),m=>`<span class="hl">${m}</span>`)}</div>`,["pdf",U.docs])})}}
+const hm=()=>new Date().toLocaleTimeString(D.locale,{timeZone:D.tz,hour:"2-digit",minute:"2-digit",hour12:false});
+const bub=t=>(t[3]?`<div class="ds">${t[3]}</div>`:"")+`<div class="bw ${t[1]?"me":""}"><div class="b ${t[1]?"me":""}">${t[0]}</div><small>${t[2]}</small></div>`;
+function thread(i){$("#notif").classList.remove("on");const m=D.msgs[i],had=m[2];m[2]=0;page(m[0],`<div class="chat">${m[1].map(bub).join("")}</div>`,["msg",U.msgs]);cur=i;
+ const bd=A.querySelector(".body");bd.scrollTop=bd.scrollHeight;
+ if(m[4]&&m[4].length)bd.onclick=()=>{if(!m[4].length)return;const t=m[4].shift();m[1].push(t);bd.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t));bd.scrollTop=bd.scrollHeight};
+ if(had&&m[3]){const q=m[3];m[3]=null;q.forEach((t,k)=>setTimeout(()=>{m[1].push([t[0],0,U.today+" "+hm()]);
+  if(cur===i&&$("#app").classList.contains("on"))thread(i);else m[2]=1},2200*(k+1)))}}
+function maybeNotify(){const i=D.msgs.findIndex(m=>m[0]===D.notify.from),m=D.msgs[i];
+ if(!m||!m[4]||m[4].length||m.fired)return;m.fired=1;const n=$("#notif");let tm;
+ n.onclick=()=>{n.classList.remove("on");thread(i)};
+ D.notify.texts.forEach((tx,k)=>setTimeout(()=>{const t=[tx,0,U.today+" "+hm()];m[1].push(t);
+  if(cur===i&&$("#app").classList.contains("on")){A.querySelector(".chat").insertAdjacentHTML("beforeend",bub(t));const b=A.querySelector(".body");b.scrollTop=b.scrollHeight}
+  else{m[2]=1;badge();n.innerHTML=`<div class="ic">💬</div><div style="min-width:0"><b>${m[0]}</b><div class="tx">${tx}</div></div><small>${D.notify.now}</small>`;
+   n.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>n.classList.remove("on"),5000)}},1200+k*2800))}
+function safari(){page(U.fav,`<div class="fav">${U.favs.map(f=>`<div><span>${f[0]}</span>${f[1]}</div>`).join("")}</div>`,null,`<div class="sbar" id="sb">🔍 ${U.sfph}</div>`);
+ $("#sb").onclick=()=>{A.innerHTML=`<div class="sh"><div class="sin">🔍 ${U.sfph}</div><button id="cn">${U.cancel}</button></div><div class="body"><div class="sec">${U.recentS}</div>${D.search.map(x=>`<div class="row">🔍&nbsp;${x}<small>↖</small></div>`).join("")}</div>`;$("#cn").onclick=safari}}
+const g=i=>`linear-gradient(135deg,hsl(${i*47+10} 65% 62%),hsl(${i*47+50} 55% 38%))`;
+function lib(i){const m=D.music[i];page(U.lib,D.music.map((x,j)=>`<div class="mrow" data-i="${j}"><div class="art" style="background:${g(j)}"></div><div>${x[0]}<small>${x[1]}</small></div></div>`).join(""),null,
+ `<div class="mini" id="mn"><div class="art" style="background:${g(i)}"></div><div>${m[0]}</div><span>⏸ ⏭</span></div><div class="tabs">${U.tabs.map((t,j)=>`<span class="${j==2?"on2":""}">${t}</span>`).join("")}</div>`);
+ bind("[data-i]",player);$("#mn").onclick=()=>player(i)}
+function player(i){$("#status").classList.remove("dk");const m=D.music[i],n=D.music.length,h=i*47+10;let on=true;
+ A.innerHTML=`<div class="pl" style="background:linear-gradient(180deg,hsl(${h} 45% 38%),hsl(${h} 50% 14%))"><button id="cl" style="text-align:left;font-size:22px">⌄</button><div class="big" style="background:${g(i)}"></div>
+ <div style="font-size:19px;font-weight:700">${m[0]}</div><div style="opacity:.7;font-size:16px">${m[1]}</div><div class="bar"><i></i></div><div class="tm"><span>1:12</span><span>-3:21</span></div>
+ <div class="ctl" style="margin-top:22px;font-size:30px"><button id="pv">⏮</button><button id="pp" style="font-size:38px">⏸</button><button id="nx">⏭</button></div></div>`;
+ $("#cl").onclick=()=>lib(i);$("#pv").onclick=()=>player((i+n-1)%n);$("#nx").onclick=()=>player((i+1)%n);
+ $("#pp").onclick=()=>{on=!on;$("#pp").textContent=on?"⏸":"▶"}}
+</script></body></html>
