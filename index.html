@@ -8,14 +8,7 @@
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html,body{height:100%;margin:0}
 body{background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","Hiragino Sans","Noto Sans JP",sans-serif}
-#phone{
-  width:min(340px, calc(100vw - 20px));
-  height:min(700px, calc(100dvh - 20px));
-  border-radius:42px;
-  background:#000;
-  padding:9px;
-  box-shadow:0 20px 50px rgba(0,0,0,.3);
-}
+#phone{width:340px;height:min(700px,94%);border-radius:42px;background:#000;padding:9px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
 #screen{position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:linear-gradient(160deg,#8d99ae,#2b2d42);color:#fff}
 #status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;justify-content:space-between;align-items:center;padding:6px 22px 0;font-size:13px;font-weight:600;z-index:20;pointer-events:none}
 .bat{display:inline-flex;align-items:center;gap:4px}.bat i{width:22px;height:11px;border:1.5px solid currentColor;border-radius:3px;position:relative;display:inline-block}
@@ -102,29 +95,6 @@ body{background:var(--bg);display:flex;align-items:center;justify-content:center
 #notif b{display:block;font-size:13px}#notif .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#333}#notif small{margin-left:auto;color:#8a8a90;font-size:11px;align-self:flex-start;flex:none}
 #status{background:transparent;transition:color .2s}#status.hide{display:none}#status.dk{color:#111}.rt{display:inline-flex;align-items:center;gap:6px}
 #status.dk~#homebar{background:#111}
- /* 모바일 화면 대응 */
-@media (max-height: 760px) {
-  #lock {
-    padding-top: clamp(36px, 7vh, 55px);
-  }
-
-  #lock .t {
-    font-size: clamp(46px, 8vh, 58px);
-    margin-bottom: clamp(12px, 2.5vh, 22px);
-  }
-
-  #dots {
-    margin-bottom: clamp(8px, 1.8vh, 14px);
-  }
-
-  #pad {
-    gap: clamp(6px, 1.4vh, 10px);
-  }
-
-  #pad button {
-    height: clamp(46px, 7.8vh, 58px);
-  }
-}
 </style></head><body>
 <div id="phone"><div id="screen">
 <div id="status" class="hide"><span id="clock">--:--</span><span class="rt"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx=".8" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx=".8" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx=".8" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx=".8" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M1 4a10 10 0 0114 0M3.5 6.6a6.5 6.5 0 019 0M6 9a3 3 0 014 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="bat"><span id="pct">23</span>%<i><b></b></i></span></span></div>
