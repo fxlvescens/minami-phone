@@ -167,7 +167,7 @@ const D={
   ["사쿠라이 감독님",[["나츠메 군, 이번 드라마 어떻게 나와줄 수 없겠어?",0,"10/24 22:12"],["대본은 나츠메 군에게 맞춰서 고칠 수 있어. 한번 얘기 좀 하자.",0,"10/24 22:13"]],0],
   ["프로듀서 카노",[["다시 생각해 줄 수 없을까요? 연락 기다릴게요.",0,"10/23 11:20"]],0]],
  search:["분위기 좋은 바 도쿄","도쿄 바 혼자 가기 좋은 곳","시부야 맛집 개인실","긴자 스시 맛집 예약","도쿄 심야 라멘 맛집","혼밥 하기 좋은 맛집 도쿄","도쿄 클래식 공연 일정","피아노 리사이틀 도쿄 올해","취미 추천","혼자 하는 취미 추천","30대 후반 여성 선물 추천","어머니 선물 추천 30대 후반 여성"],
- notes:[["연습 메모","・생각하는 표정 너무 오래 유지하지 말기. 멍해 보임.\n・슬픈 장면에서 미간 찌푸리는 버릇. 매번 같은 표정 쓰지 말 것.\n・대사 사이에 의미 없는 웃음 넣지 않기.\n・감정 잡으려고 숨을 너무 크게 들이마심. 부자연스러움.\n・화난 연기할 때 턱에 힘 들어감. 발음 뭉개지지 않게.\n・울음 참는 연기할 때 눈을 너무 자주 깜빡임.\n・감정 없는 일상 대사도 전부 의미심장하게 말하는 경향.\n・잘하려고 하지 말고 그냥 듣기. 감독님이 제일 많이 하는 말."],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
+ notes:[["연습 메모","・생각하는 표정 오래 X\n・미간 찌푸리는 버릇\n・의미 없는 웃음 X\n・숨 크게 들이마시기 X\n・화낼 때 턱에 힘 X\n・울음 참을 때 깜빡임\n・일상 대사 의미심장 X\n・잘하려 말고 그냥 듣기","・생각하는 표정 오래 X\n・미간 찌푸리는 버릇\n・의미 없는 웃음 X"],["할 일","・사무소에 연락\n・대본 3장 암기\n・전기요금 내기"]],
  playlists:[
   {name:"I",tracks:[
    ["Suite bergamasque, L. 75: III. Clair de lune","Claude Debussy"],
@@ -241,7 +241,7 @@ function badge(){const n=D.msgs.filter(m=>m[2]).length,e=$("#msgb");e.textConten
 const W=D.widget;
 $("#l1").textContent=U.lbWx;$("#l2").textContent=U.lbNt;$("#l3").textContent=U.lbCal;
 $("#wx").innerHTML=`<div class="in"><div class="city">${W.city} ➤</div><div class="big2">${W.temp}</div><div class="bt"><svg viewBox="0 0 24 24"><path fill="#fff" d="M7 18a4 4 0 01-.5-8 5.5 5.5 0 0110.6 1.3A3.4 3.4 0 0117 18z"/></svg><b>${W.cond}</b><br><span>${W.hl}</span></div></div>`;
-$("#nw").innerHTML=`<div class="in"><div class="hh">${U.note}</div><div class="tt">${D.notes[0][0]}</div>${D.notes[0][1].split("\n").map(l=>`<div class="ln">${l}</div>`).join("")}</div>`;
+$("#nw").innerHTML=`<div class="in"><div class="hh">${U.note}</div><div class="tt">${D.notes[0][0]}</div>${(D.notes[0][2]||D.notes[0][1]).split("\n").map(l=>`<div class="ln">${l}</div>`).join("")}</div>`;
 $("#nw").onclick=()=>open("note");
 function cal(){const o={timeZone:D.tz},d=new Date();
  $("#cal").innerHTML=`<div class="in"><div class="wk">${d.toLocaleDateString(D.locale,{...o,weekday:"long"})}</div><div class="dn">${d.toLocaleDateString(D.locale,{...o,day:"numeric"}).replace(/\D/g,"")}</div><div class="ev">${U.calnone}</div></div>`}
